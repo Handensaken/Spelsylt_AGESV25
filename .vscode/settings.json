@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "AGESV25.sln"
+    "dotnet.defaultSolution": "Spelsylt_AGESV25.sln"
 }
