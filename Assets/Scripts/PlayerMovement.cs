@@ -11,26 +11,25 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 inputVector;
     public Vector2 facingDir;
     public Animator anim;
+    [Header("MovementDisabled")]
+    public float disabledMovementDuration;
+    private bool _DisabledMovement = false;
 
     [SerializeField]
     private float _maxSpeed = 100;
 
-    // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
-
-    // Update is called once per frame
-
     void Update()
     {
         anim.SetFloat("Horizontal", facingDir.x);
         anim.SetFloat("Vertical", facingDir.y);
 
+        if (_DisabledMovement) return;
         transform.Translate(inputVector * _Speed * Time.deltaTime);
-
     }
 
     void FixedUpdate()
@@ -51,5 +50,13 @@ public class PlayerMovement : MonoBehaviour
         {
             facingDir = inputVector;
         }
+    }
+    public void DisableMovment(){
+        _DisabledMovement = true;
+        Invoke(nameof(ReEnableMovment), disabledMovementDuration);
+    }
+    private void ReEnableMovment(){
+        rb.velocity = Vector2.zero;
+        _DisabledMovement = false;
     }
 }

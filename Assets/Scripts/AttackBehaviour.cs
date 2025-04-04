@@ -60,6 +60,8 @@ public class AttackBehaviour : MonoBehaviour
                         //Get opponent Rigidbody
                         Rigidbody2D oppRB = hits[i]
                             .transform.gameObject.GetComponent<Rigidbody2D>();
+
+                            hits[i].transform.gameObject.GetComponent<PlayerMovement>().DisableMovment();
                         //Add hitting Force
                         oppRB.AddForce(dir.normalized * _hitForce, ForceMode2D.Impulse);
                     }
