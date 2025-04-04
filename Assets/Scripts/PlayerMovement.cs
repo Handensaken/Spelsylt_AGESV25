@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 inputVector;
     public Vector2 facingDir;
+    public Animator anim;
 
     [SerializeField]
     private float _maxSpeed = 100;
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -24,13 +26,16 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        anim.SetFloat("Horizontal", inputVector.x);
+        anim.SetFloat("Vertical", inputVector.y);
+
         transform.Translate(inputVector * _Speed * Time.deltaTime);
 
     }
 
     void FixedUpdate()
     {
-       // rb.AddForce(inputVector * _Speed * Time.deltaTime);
+        // rb.AddForce(inputVector * _Speed * Time.deltaTime);
         //Limit Velocity
         if (rb.velocity.magnitude > _maxSpeed)
         {
