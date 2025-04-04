@@ -1,0 +1,23 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class GameEventsManager : MonoBehaviour
+{
+    public static GameEventsManager instance { get; private set; }
+    public void Awake()
+    {
+        instance = this;
+    }
+    
+
+    public event Action<GameObject> OnPlayerDeath;
+    public void PlayerDeath(GameObject player)
+    {
+        if (OnPlayerDeath != null)
+        {
+            OnPlayerDeath(player);
+        }
+    }
+}
