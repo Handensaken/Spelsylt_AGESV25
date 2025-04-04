@@ -19,7 +19,6 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         transform.Translate(inputVector * _Speed * Time.deltaTime);
-
     }
     public void Movement(InputAction.CallbackContext ctx){
         inputVector =  ctx.ReadValue<Vector2>();
