@@ -26,8 +26,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        anim.SetFloat("Horizontal", inputVector.x);
-        anim.SetFloat("Vertical", inputVector.y);
+        anim.SetFloat("Horizontal", facingDir.x);
+        anim.SetFloat("Vertical", facingDir.y);
 
         transform.Translate(inputVector * _Speed * Time.deltaTime);
 
