@@ -21,23 +21,22 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-<<<<<<< Updated upstream
+
     void Update()
     {
         transform.Translate(inputVector * _Speed * Time.deltaTime);
-=======
-    void Update() { }
+
+    }
 
     void FixedUpdate()
     {
-        rb.AddForce(inputVector * _Speed * Time.deltaTime);
+       // rb.AddForce(inputVector * _Speed * Time.deltaTime);
         //Limit Velocity
         if (rb.velocity.magnitude > _maxSpeed)
         {
             Vector2 newSpeed = rb.velocity.normalized * _maxSpeed;
             rb.velocity = newSpeed;
         }
->>>>>>> Stashed changes
     }
 
     public void Movement(InputAction.CallbackContext ctx)
