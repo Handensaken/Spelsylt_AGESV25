@@ -159,7 +159,7 @@ MonoBehaviour:
   _Speed: 5
   facingDir: {x: 0, y: 0}
   anim: {fileID: 0}
-  disabledMovementDuration: 0
+  disabledMovementDuration: 3
   _maxSpeed: 100
 --- !u!50 &2539478294266617474
 Rigidbody2D:

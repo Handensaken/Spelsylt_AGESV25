@@ -54,6 +54,7 @@ public class AttackBehaviour : MonoBehaviour
                 {
                     if (hits[i].transform.CompareTag("Player"))
                     {
+                        Debug.Log("aaaa");
                         //Find the direction vector from player A to B
                         Vector2 dir = hits[i].transform.position - transform.position;
 
