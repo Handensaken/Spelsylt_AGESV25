@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 inputVector;
     public Vector2 facingDir;
     public Animator anim;
+
     [Header("MovementDisabled")]
     public float disabledMovementDuration;
     private bool _DisabledMovement = false;
@@ -24,10 +25,12 @@ public class PlayerMovement : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
+
     void Update()
     {
         anim.SetFloat("Horizontal", facingDir.x);
         anim.SetFloat("Vertical", facingDir.y);
+        //Debug.Log(rb.velocity.magnitude);
 
         if (_DisabledMovement)
         {
@@ -40,6 +43,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             transform.Translate(inputVector * _Speed * Time.deltaTime);
+            anim.SetFloat("Speed", inputVector.magnitude);
         }
     }
 
@@ -62,11 +66,13 @@ public class PlayerMovement : MonoBehaviour
             facingDir = inputVector;
         }
     }
+
     public void DisableMovment()
     {
         _DisabledMovement = true;
         _disabledMovementTimer = disabledMovementDuration;
     }
+
     private void ReEnableMovment()
     {
         rb.velocity = Vector2.zero;
