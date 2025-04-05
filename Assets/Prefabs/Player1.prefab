@@ -166,13 +166,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Speed: 5
+  _minVelocityReset: 2
   facingDir: {x: 0, y: 0}
   anim: {fileID: 0}
   disabledMovementDuration: 3
   _maxSpeed: 100
   _wallLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
 --- !u!50 &4319290271594597748
 Rigidbody2D:
   serializedVersion: 4
@@ -212,7 +213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07d2b5932d44ac34d8bbda0cb93ef822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hitForce: 10
+  _hitForce: 70
   _maxSpeed: 10
   _attackRadius: 0.75
   _distance: 1.5

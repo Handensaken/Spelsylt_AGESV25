@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
         float radiusX = GetComponent<CircleCollider2D>().radius * transform.localScale.x;
         float radiusY = GetComponent<CircleCollider2D>().radius * transform.localScale.y;
 
-        float moveDistance = _Speed * Time.deltaTime;
+        float moveDistance = _Speed * 1.1f * Time.deltaTime;
 
         Vector2 moveX = new Vector2(inputVector.x, 0);
         Vector2 moveY = new Vector2(0, inputVector.y);
@@ -85,6 +85,12 @@ public class PlayerMovement : MonoBehaviour
         if (moveY != Vector2.zero)
         {
             RaycastHit2D hitY = Physics2D.Raycast(transform.position, moveY.normalized, radiusY + moveDistance, _wallLayerMask);
+            if (hitY)
+            {
+
+                Debug.Log(hitY.transform.gameObject.name);
+
+            }
             if (!hitY)
             {
                 transform.Translate(moveY * moveDistance);
