@@ -57,7 +57,6 @@ public class AttackBehaviour : MonoBehaviour
         _rB = GetComponent<Rigidbody2D>();
     }
 
-
     private bool shouldCast = false;
 
     void Update()
@@ -83,6 +82,8 @@ public class AttackBehaviour : MonoBehaviour
         //shouldCast = castState;
     }
 
+    private bool BABYCOR = false;
+
     public void Attack(InputAction.CallbackContext context)
     {
         if (_attackTimer >= 0)
@@ -92,6 +93,7 @@ public class AttackBehaviour : MonoBehaviour
             _isCharging = true;
             _chargeTimer = 0;
             GetComponent<PlayerMovement>().anim.SetTrigger("AttackInit");
+            BABYCOR = false;
         }
         if (!context.action.inProgress && _attackTimer <= 0)
         {
@@ -160,7 +162,8 @@ public class AttackBehaviour : MonoBehaviour
                 _tempForce = _maxForceMultiplyer * _hitForce;
             }
         }
-
+        if (BABYCOR)
+            return;
         RaycastHit2D[] hits = Physics2D.CircleCastAll(
             _swordReferencePoint.position,
             _attackRadius,
@@ -186,6 +189,7 @@ public class AttackBehaviour : MonoBehaviour
                     oppRB.AddForce(dir.normalized * _tempForce, ForceMode2D.Impulse);
                     GameEventsManager.instance.PlayerHit(hits[i].transform);
                     GameEventsManager.instance.CameraShake();
+                    BABYCOR = true;
                 }
             }
         }
