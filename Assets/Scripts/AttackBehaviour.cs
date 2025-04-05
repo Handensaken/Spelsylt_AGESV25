@@ -77,9 +77,12 @@ public class AttackBehaviour : MonoBehaviour
         }
         if (!context.action.inProgress && _attackTimer <= 0)
         {
+            _attackTimer = _attackCooldown;
+
             float _tempForce = _hitForce;
             if (_chargeTimer >= _timeUntillCharged)
             {
+                _attackTimer = _heavyAttackCooldown;
                 _tempForce = _forceByTime * _tempForce * _chargeTimer;
                 if (_tempForce > _maxForceMultiplyer * _hitForce)
                 {
@@ -87,7 +90,6 @@ public class AttackBehaviour : MonoBehaviour
                 }
             }
             _isCharging = false;
-            _attackTimer = _attackCooldown;
             dir = GetComponent<PlayerMovement>().facingDir;
             RaycastHit2D[] hits = Physics2D.CircleCastAll(
                 transform.position,
@@ -113,13 +115,14 @@ public class AttackBehaviour : MonoBehaviour
                         Debug.Log(_tempForce + " force we are using");
                         oppRB.AddForce(dir.normalized * _tempForce, ForceMode2D.Impulse);
                         GameEventsManager.instance.PlayerHit(hits[i].transform);
+                        GameEventsManager.instance.CameraShake();
                     }
                 }
             }
         }
     }
 
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
 

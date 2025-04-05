@@ -22,6 +22,16 @@ public class GameEventsManager : MonoBehaviour
         }
     }
 
+    public event Action OnCameraShake;
+
+    public void CameraShake()
+    {
+        if (OnCameraShake != null)
+        {
+            OnCameraShake();
+        }
+    }
+
     public event Action<Transform> OnPlayerHit;
 
     public void PlayerHit(Transform other)

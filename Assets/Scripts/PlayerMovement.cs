@@ -19,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private float _maxSpeed = 100;
+    [Header("Find Wall")]
+    [SerializeField] private LayerMask _wallLayerMask;
+
 
     void Start()
     {
@@ -42,10 +45,48 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            transform.Translate(inputVector * _Speed * Time.deltaTime);
+            MovePlayer();
             anim.SetFloat("Speed", inputVector.magnitude);
         }
     }
+
+    private void MovePlayer()
+    {
+        float radius = GetComponent<CircleCollider2D>().radius * transform.localScale.x;
+        float moveDistance = _Speed * Time.deltaTime;
+
+        Vector2 moveX = new Vector2(inputVector.x, 0);
+        Vector2 moveY = new Vector2(0, inputVector.y);
+
+        if (moveX != Vector2.zero)
+        {
+            RaycastHit2D hitX = Physics2D.Raycast(transform.position, moveX.normalized, radius + moveDistance, _wallLayerMask);
+            if (!hitX)
+            {
+                transform.Translate(moveX * moveDistance);
+            }
+            else
+            {
+                float distance = hitX.distance - radius;
+                transform.Translate(moveX.normalized * distance);
+            }
+        }
+
+        if (moveY != Vector2.zero)
+        {
+            RaycastHit2D hitY = Physics2D.Raycast(transform.position, moveY.normalized, radius + moveDistance, _wallLayerMask);
+            if (!hitY)
+            {
+                transform.Translate(moveY * moveDistance);
+            }
+            else
+            {
+                float distance = hitY.distance - radius;
+                transform.Translate(moveY.normalized * distance);
+            }
+        }
+    }
+
 
     void FixedUpdate()
     {
