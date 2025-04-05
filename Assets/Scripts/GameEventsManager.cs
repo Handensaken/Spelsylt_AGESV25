@@ -13,12 +13,20 @@ public class GameEventsManager : MonoBehaviour
     }
 
     public event Action<GameObject> OnPlayerDeath;
-
     public void PlayerDeath(GameObject player)
     {
         if (OnPlayerDeath != null)
         {
             OnPlayerDeath(player);
+        }
+    }
+    
+    public event Action OnWeRespawnPlayer;
+    public void WeRespawnPlayer()
+    {
+        if (OnWeRespawnPlayer != null)
+        {
+            OnWeRespawnPlayer();
         }
     }
 

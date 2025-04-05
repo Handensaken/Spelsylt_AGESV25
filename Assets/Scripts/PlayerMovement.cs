@@ -15,7 +15,6 @@ public class PlayerMovement : MonoBehaviour
     public Animator anim;
 
     [Header("MovementDisabled")]
-    public float disabledMovementDuration;
     private bool _DisabledMovement = false;
     private float _disabledMovementTimer = 0;
 
@@ -124,10 +123,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void DisableMovment()
+    public void DisableMovment(float duration)
     {
         _DisabledMovement = true;
-        _disabledMovementTimer = disabledMovementDuration;
+        _disabledMovementTimer = duration;
     }
 
     private void ReEnableMovment()

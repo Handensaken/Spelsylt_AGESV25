@@ -29,6 +29,8 @@ public class AttackBehaviour : MonoBehaviour
     [SerializeField]
     private float _attackCooldown = 2;
     private float _attackTimer = 0;
+    [SerializeField]
+    private float _disableMovmentOnHitDuration = 3f;
 
     [Header("Heavy Attack")]
     [SerializeField]
@@ -95,7 +97,7 @@ public class AttackBehaviour : MonoBehaviour
             GetComponent<PlayerMovement>().anim.SetTrigger("AttackInit");
             BABYCOR = false;
         }
-        if (!context.action.inProgress && _attackTimer <= 0)
+        if (context.canceled && _attackTimer <= 0 && _isCharging)
         {
             _attackTimer = _attackCooldown;
 
@@ -183,9 +185,8 @@ public class AttackBehaviour : MonoBehaviour
                     Rigidbody2D oppRB = hits[i].transform.gameObject.GetComponent<Rigidbody2D>();
 
                     PlayerMovement pM = hits[i].transform.gameObject.GetComponent<PlayerMovement>();
-                    pM.DisableMovment();
+                    pM.DisableMovment(_disableMovmentOnHitDuration);
                     //Add hitting Force
-                    Debug.Log(_tempForce + " force we are using");
                     oppRB.AddForce(dir.normalized * _tempForce, ForceMode2D.Impulse);
                     GameEventsManager.instance.PlayerHit(hits[i].transform);
                     GameEventsManager.instance.CameraShake();
