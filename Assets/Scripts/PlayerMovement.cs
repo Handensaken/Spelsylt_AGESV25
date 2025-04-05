@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private float _Speed = 5f;
+    [SerializeField]
+    private float _minVelocityReset = 2f;
     private Rigidbody2D rb;
     private Vector2 inputVector;
     public Vector2 facingDir;
@@ -22,13 +24,15 @@ public class PlayerMovement : MonoBehaviour
     [Header("Find Wall")]
     [SerializeField] private LayerMask _wallLayerMask;
 
-
     void Start()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
-
+    void OnEnable()
+    {
+        _disabledMovementTimer = 0;
+    }
     void Update()
     {
         anim.SetFloat("Horizontal", facingDir.x);
@@ -47,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         {
             MovePlayer();
             anim.SetFloat("Speed", inputVector.magnitude);
-            if (rb.velocity.magnitude <= 1f){
+            if (rb.velocity.magnitude <= _minVelocityReset){
                 rb.velocity = Vector2.zero;
             }
         }
