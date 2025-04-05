@@ -115,6 +115,7 @@ public class AttackBehaviour : MonoBehaviour
                         Debug.Log(_tempForce + " force we are using");
                         oppRB.AddForce(dir.normalized * _tempForce, ForceMode2D.Impulse);
                         GameEventsManager.instance.PlayerHit(hits[i].transform);
+                        GameEventsManager.instance.CameraShake();
                     }
                 }
             }
