@@ -51,7 +51,8 @@ public class PlayerMovement : MonoBehaviour
         {
             MovePlayer();
             anim.SetFloat("Speed", inputVector.magnitude);
-            if (rb.velocity.magnitude <= _minVelocityReset){
+            if (rb.velocity.magnitude <= _minVelocityReset)
+            {
                 rb.velocity = Vector2.zero;
             }
         }
@@ -59,7 +60,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void MovePlayer()
     {
-        float radius = GetComponent<CircleCollider2D>().radius * transform.localScale.x;
+        float radiusX = GetComponent<CircleCollider2D>().radius * transform.localScale.x;
+        float radiusY = GetComponent<CircleCollider2D>().radius * transform.localScale.y;
+
         float moveDistance = _Speed * Time.deltaTime;
 
         Vector2 moveX = new Vector2(inputVector.x, 0);
@@ -67,28 +70,28 @@ public class PlayerMovement : MonoBehaviour
 
         if (moveX != Vector2.zero)
         {
-            RaycastHit2D hitX = Physics2D.Raycast(transform.position, moveX.normalized, radius + moveDistance, _wallLayerMask);
+            RaycastHit2D hitX = Physics2D.Raycast(transform.position, moveX.normalized, radiusX + moveDistance, _wallLayerMask);
             if (!hitX)
             {
                 transform.Translate(moveX * moveDistance);
             }
             else
             {
-                float distance = hitX.distance - radius;
+                float distance = hitX.distance - radiusX;
                 transform.Translate(moveX.normalized * distance);
             }
         }
 
         if (moveY != Vector2.zero)
         {
-            RaycastHit2D hitY = Physics2D.Raycast(transform.position, moveY.normalized, radius + moveDistance, _wallLayerMask);
+            RaycastHit2D hitY = Physics2D.Raycast(transform.position, moveY.normalized, radiusY + moveDistance, _wallLayerMask);
             if (!hitY)
             {
                 transform.Translate(moveY * moveDistance);
             }
             else
             {
-                float distance = hitY.distance - radius;
+                float distance = hitY.distance - radiusY;
                 transform.Translate(moveY.normalized * distance);
             }
         }
