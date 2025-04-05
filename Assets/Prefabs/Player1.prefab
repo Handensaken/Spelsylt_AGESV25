@@ -80,10 +80,6 @@ MonoBehaviour:
     m_ActionId: a7b88ad6-ef81-47cc-a15d-12113b4265a0
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 76d7f4dd-dbad-46e8-bd44-9977611df28a
-    m_ActionName: Player/Look[/Mouse/delta,/Touchscreen/delta,/Pen/delta]
-  - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 3727531239173669575}
         m_TargetAssemblyTypeName: AttackBehaviour, Assembly-CSharp
@@ -174,7 +170,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -202,8 +198,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hitForce: 10
   _maxSpeed: 100
-  _attackRadius: 0.5
+  _attackRadius: 0.7
   _distance: 1.5
+  _attackCooldown: 2
 --- !u!58 &2211357808240547774
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -390,14 +390,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2240908894822888111, guid: 6098a4456414d154dadf56d7ea505b40, type: 3}
-      propertyPath: _attackRadius
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 2539478294266617474, guid: 6098a4456414d154dadf56d7ea505b40, type: 3}
-      propertyPath: m_LinearDrag
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 2691751566043355337, guid: 6098a4456414d154dadf56d7ea505b40, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.228934
@@ -998,14 +990,6 @@ PrefabInstance:
     - target: {fileID: 2887988178821596734, guid: 9d979ba1b38b8274a9a7e5ef6ca65de7, type: 3}
       propertyPath: m_Name
       value: Player1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3727531239173669575, guid: 9d979ba1b38b8274a9a7e5ef6ca65de7, type: 3}
-      propertyPath: _attackRadius
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4319290271594597748, guid: 9d979ba1b38b8274a9a7e5ef6ca65de7, type: 3}
-      propertyPath: m_LinearDrag
-      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
