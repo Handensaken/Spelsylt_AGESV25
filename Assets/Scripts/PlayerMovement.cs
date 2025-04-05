@@ -47,6 +47,9 @@ public class PlayerMovement : MonoBehaviour
         {
             MovePlayer();
             anim.SetFloat("Speed", inputVector.magnitude);
+            if (rb.velocity.magnitude <= 1f){
+                rb.velocity = Vector2.zero;
+            }
         }
     }
 
