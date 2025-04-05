@@ -23,6 +23,7 @@ public class ParticleHitFX : MonoBehaviour
 
     private void OnPlayerHit(Transform targetTransform)
     {
-        Instantiate(particle, targetTransform);
+        GameObject temp = Instantiate(particle, targetTransform);
+        temp.transform.parent = null;
     }
 }

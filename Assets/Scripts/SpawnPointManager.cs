@@ -61,6 +61,8 @@ public class SpawnPointManager : MonoBehaviour
     }
     void Respawn()
     {
+        GameEventsManager.instance.WeRespawnPlayer();
+
         winText.text = "";
         player1.gameObject.SetActive(true);
         player1.GetComponent<PlayerMovement>().DisableMovment(_respawnDelayedMovement);
