@@ -13,9 +13,13 @@ public class SpawnPointManager : MonoBehaviour
     public Transform spawnPoint1;
     public Transform spawnPoint2;
 
-    [Header("Win Gui")]
+    [Header("Win Round")]
     public TextMeshProUGUI winText;
     public float respawnDeley;
+    [Header("Win Game")]
+    [SerializeField] private GameObject _winMenu;
+    [SerializeField] private TextMeshProUGUI _winGameText;
+
     [Header("Points Gui")]
     public TextMeshProUGUI player1PointsText;
     public TextMeshProUGUI player2PointsText;
@@ -44,7 +48,14 @@ public class SpawnPointManager : MonoBehaviour
             winText.text = player1.name + " won this game";
         }
         SetPointsText();
-        Invoke(nameof(Respawn), 3f);
+        if (_Player1Points == 3 || _Player2Points == 3)
+        {
+            WinGame();
+        }
+        else
+        {
+            Invoke(nameof(Respawn), 3f);
+        }
     }
     void Respawn()
     {
@@ -53,6 +64,28 @@ public class SpawnPointManager : MonoBehaviour
         player2.gameObject.SetActive(true);
 
         SetPosition();
+    }
+    private void WinGame()
+    {
+        if (_winMenu != null)
+        {
+            _winMenu.SetActive(true);
+        }
+
+        if (_Player1Points == 3)
+        {
+            if (_winGameText != null)
+            {
+                _winGameText.text = player1.name + " Won This Game!";
+            }
+        }
+        else if (_Player2Points == 3)
+        {
+            if (_winGameText != null)
+            {
+                _winGameText.text = player2.name + " Won This Game!";
+            }
+        }
     }
     void SetPointsText()
     {
