@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEditor;
+using UnityEditor.EditorTools;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -26,6 +27,18 @@ public class AttackBehaviour : MonoBehaviour
     private float _attackCooldown = 2;
     private float _attackTimer = 0;
 
+    [Header("Heavy Attack")]
+    [SerializeField]
+    private float _heavyAttackCooldown = 3;
+    [SerializeField]
+    private float _forceMultiplyer = 2;
+    [SerializeField]
+    private float _timeUntillMaxCharged = 2;
+    private float _chargeTimer = 0;
+    private bool _isCharging = false;
+
+
+
     Vector2 dir;
 
 
@@ -43,13 +56,28 @@ public class AttackBehaviour : MonoBehaviour
     void Update()
     {
         _attackTimer -= Time.deltaTime;
+        if (_isCharging)
+        {
+            _chargeTimer += Time.deltaTime;
+        }
     }
 
     public void Attack(InputAction.CallbackContext context)
     {
+        if (context.started)
+        {
+            Debug.Log("hej");
+            _isCharging = true;
+            _chargeTimer = 0;
+        }
         Debug.Log("We try to attack");
         if (!context.action.inProgress && _attackTimer <= 0)
         {
+            float _tempForce = _hitForce;
+            if (_chargeTimer > 1){
+                _tempForce = _tempForce * _chargeTimer;
+            }
+            _isCharging = false;
             Debug.Log("We attack");
             _attackTimer = _attackCooldown;
             dir = GetComponent<PlayerMovement>().facingDir;
@@ -74,7 +102,8 @@ public class AttackBehaviour : MonoBehaviour
 
                         hits[i].transform.gameObject.GetComponent<PlayerMovement>().DisableMovment();
                         //Add hitting Force
-                        oppRB.AddForce(dir.normalized * _hitForce, ForceMode2D.Impulse);
+                        Debug.Log(_tempForce + " force we are using");
+                        oppRB.AddForce(dir.normalized * _tempForce, ForceMode2D.Impulse);
                     }
                 }
             }
