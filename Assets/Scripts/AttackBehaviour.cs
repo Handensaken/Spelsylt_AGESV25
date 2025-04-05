@@ -11,6 +11,7 @@ using UnityEngine.InputSystem;
 public class AttackBehaviour : MonoBehaviour
 {
     private Rigidbody2D _rB;
+
     [Header("Attack Info")]
     [SerializeField]
     private float _hitForce;
@@ -23,6 +24,7 @@ public class AttackBehaviour : MonoBehaviour
 
     [SerializeField]
     private float _distance = 10;
+
     [SerializeField]
     private float _attackCooldown = 2;
     private float _attackTimer = 0;
@@ -30,22 +32,23 @@ public class AttackBehaviour : MonoBehaviour
     [Header("Heavy Attack")]
     [SerializeField]
     private float _heavyAttackCooldown = 3;
+
     [SerializeField]
     private float _maxForceMultiplyer = 2;
 
     [SerializeField]
     [Tooltip("Hur mycket ska multiplyern öka pär tid, (time * _forcebyTime) = force applyed")]
     private float _forceByTime = 2;
+
     [SerializeField]
-    [Tooltip("Tiden det tar att göra den charge attack, borde inte _timeUntillCharged * _forceByTime < 1")]
+    [Tooltip(
+        "Tiden det tar att göra den charge attack, borde inte _timeUntillCharged * _forceByTime < 1"
+    )]
     private float _timeUntillCharged = 1;
     private float _chargeTimer = 0;
     private bool _isCharging = false;
 
-
-
     Vector2 dir;
-
 
     // Start is called before the first frame update
     void Start()
@@ -54,10 +57,8 @@ public class AttackBehaviour : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
-    {
+    void FixedUpdate() { }
 
-    }
     void Update()
     {
         _attackTimer -= Time.deltaTime;
@@ -69,11 +70,13 @@ public class AttackBehaviour : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (_attackTimer >= 0) return;
+        if (_attackTimer >= 0)
+            return;
         if (context.started)
         {
             _isCharging = true;
             _chargeTimer = 0;
+            GetComponent<PlayerMovement>().anim.SetTrigger("AttackInit");
         }
         if (!context.action.inProgress && _attackTimer <= 0)
         {
@@ -90,6 +93,8 @@ public class AttackBehaviour : MonoBehaviour
                 }
             }
             _isCharging = false;
+            GetComponent<PlayerMovement>().anim.SetTrigger("AttackRelease");
+
             dir = GetComponent<PlayerMovement>().facingDir;
             RaycastHit2D[] hits = Physics2D.CircleCastAll(
                 transform.position,
@@ -110,7 +115,9 @@ public class AttackBehaviour : MonoBehaviour
                         Rigidbody2D oppRB = hits[i]
                             .transform.gameObject.GetComponent<Rigidbody2D>();
 
-                        hits[i].transform.gameObject.GetComponent<PlayerMovement>().DisableMovment();
+                        PlayerMovement pM = hits[i]
+                            .transform.gameObject.GetComponent<PlayerMovement>();
+                        pM.DisableMovment();
                         //Add hitting Force
                         Debug.Log(_tempForce + " force we are using");
                         oppRB.AddForce(dir.normalized * _tempForce, ForceMode2D.Impulse);

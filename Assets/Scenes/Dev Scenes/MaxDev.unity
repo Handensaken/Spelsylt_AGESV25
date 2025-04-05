@@ -1127,6 +1127,14 @@ PrefabInstance:
       propertyPath: _attackRadius
       value: 0.75
       objectReference: {fileID: 0}
+    - target: {fileID: 3727531239173669575, guid: 9d979ba1b38b8274a9a7e5ef6ca65de7, type: 3}
+      propertyPath: _attackCooldown
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3727531239173669575, guid: 9d979ba1b38b8274a9a7e5ef6ca65de7, type: 3}
+      propertyPath: _heavyAttackCooldown
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 4319290271594597748, guid: 9d979ba1b38b8274a9a7e5ef6ca65de7, type: 3}
       propertyPath: m_LinearDrag
       value: 0.5
@@ -1175,6 +1183,10 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 8083945876015074754, guid: 9d979ba1b38b8274a9a7e5ef6ca65de7, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1269923693, guid: 871c94655e844cd4abe86d8c26c15fe0, type: 3}
     m_RemovedComponents:
     - {fileID: 5500057004822819307, guid: 9d979ba1b38b8274a9a7e5ef6ca65de7, type: 3}
     m_RemovedGameObjects: []
