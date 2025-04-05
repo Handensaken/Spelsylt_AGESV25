@@ -33,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7834522237809795725}
@@ -97,7 +97,19 @@ MonoBehaviour:
     m_ActionId: dac54526-f142-445c-b99d-40c13b1d52df
     m_ActionName: Player/Fire[/Mouse/leftButton,/Touchscreen/primaryTouch/tap]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3727531239173669575}
+        m_TargetAssemblyTypeName: AddForce, Assembly-CSharp
+        m_MethodName: Attack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: b40e8d0a-5ec3-40a2-82df-14d8b8a97adf
     m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
@@ -158,6 +170,9 @@ MonoBehaviour:
   anim: {fileID: 0}
   disabledMovementDuration: 3
   _maxSpeed: 100
+  _wallLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!50 &4319290271594597748
 Rigidbody2D:
   serializedVersion: 4
@@ -171,7 +186,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
+  m_LinearDrag: 0.5
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -198,13 +213,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hitForce: 10
-  _maxSpeed: 100
-  _attackRadius: 0.7
+  _maxSpeed: 10
+  _attackRadius: 0.75
   _distance: 1.5
-  _attackCooldown: 2
-  _heavyAttackCooldown: 3
-  _forceMultiplyer: 2
-  _timeUntillMaxCharged: 2
+  _attackCooldown: 0.1
+  _heavyAttackCooldown: 0.2
+  _maxForceMultiplyer: 2
+  _forceByTime: 2
+  _timeUntillCharged: 1
+  _swordReferencePoint: {fileID: 4957171156413647541}
 --- !u!58 &2211357808240547774
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -302,7 +319,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 725081650, guid: 871c94655e844cd4abe86d8c26c15fe0, type: 3}
+  m_Sprite: {fileID: 1269923693, guid: 871c94655e844cd4abe86d8c26c15fe0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -342,7 +359,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -0.333, z: 0}
   m_LocalScale: {x: 2.5, y: 2.5, z: 0.5}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4957171156413647541}
   m_Father: {fileID: 2562261887245844200}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8970390464914252646
@@ -397,3 +415,34 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &7348261511732043865
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4957171156413647541}
+  m_Layer: 0
+  m_Name: HitPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4957171156413647541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7348261511732043865}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.182, y: 0.185, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7834522237809795725}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
