@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("MovementDisabled")]
     public float disabledMovementDuration;
     private bool _DisabledMovement = false;
+    private float _disabledMovementTimer = 0;
 
     [SerializeField]
     private float _maxSpeed = 100;
@@ -28,8 +29,18 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("Horizontal", facingDir.x);
         anim.SetFloat("Vertical", facingDir.y);
 
-        if (_DisabledMovement) return;
-        transform.Translate(inputVector * _Speed * Time.deltaTime);
+        if (_DisabledMovement)
+        {
+            _disabledMovementTimer -= Time.deltaTime;
+            if (_disabledMovementTimer <= 0)
+            {
+                ReEnableMovment();
+            }
+        }
+        else
+        {
+            transform.Translate(inputVector * _Speed * Time.deltaTime);
+        }
     }
 
     void FixedUpdate()
@@ -51,11 +62,13 @@ public class PlayerMovement : MonoBehaviour
             facingDir = inputVector;
         }
     }
-    public void DisableMovment(){
+    public void DisableMovment()
+    {
         _DisabledMovement = true;
-        Invoke(nameof(ReEnableMovment), disabledMovementDuration);
+        _disabledMovementTimer = disabledMovementDuration;
     }
-    private void ReEnableMovment(){
+    private void ReEnableMovment()
+    {
         rb.velocity = Vector2.zero;
         _DisabledMovement = false;
     }

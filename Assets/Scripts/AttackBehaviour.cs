@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 public class AttackBehaviour : MonoBehaviour
 {
     private Rigidbody2D _rB;
-
+    [Header("Attack Info")]
     [SerializeField]
     private float _hitForce;
 
@@ -22,8 +22,12 @@ public class AttackBehaviour : MonoBehaviour
 
     [SerializeField]
     private float _distance = 10;
+    [SerializeField]
+    private float _attackCooldown = 2;
+    private float _attackTimer = 0;
 
     Vector2 dir;
+
 
     // Start is called before the first frame update
     void Start()
@@ -34,13 +38,20 @@ public class AttackBehaviour : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-      
+
+    }
+    void Update()
+    {
+        _attackTimer -= Time.deltaTime;
     }
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (!context.action.inProgress)
+        Debug.Log("We try to attack");
+        if (!context.action.inProgress && _attackTimer <= 0)
         {
+            Debug.Log("We attack");
+            _attackTimer = _attackCooldown;
             dir = GetComponent<PlayerMovement>().facingDir;
             RaycastHit2D[] hits = Physics2D.CircleCastAll(
                 transform.position,
@@ -54,7 +65,6 @@ public class AttackBehaviour : MonoBehaviour
                 {
                     if (hits[i].transform.CompareTag("Player"))
                     {
-                        Debug.Log("aaaa");
                         //Find the direction vector from player A to B
                         Vector2 dir = hits[i].transform.position - transform.position;
 
@@ -62,7 +72,7 @@ public class AttackBehaviour : MonoBehaviour
                         Rigidbody2D oppRB = hits[i]
                             .transform.gameObject.GetComponent<Rigidbody2D>();
 
-                            hits[i].transform.gameObject.GetComponent<PlayerMovement>().DisableMovment();
+                        hits[i].transform.gameObject.GetComponent<PlayerMovement>().DisableMovment();
                         //Add hitting Force
                         oppRB.AddForce(dir.normalized * _hitForce, ForceMode2D.Impulse);
                     }
