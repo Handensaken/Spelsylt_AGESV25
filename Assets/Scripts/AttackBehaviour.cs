@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TMPro;
 using UnityEditor;
 using UnityEditor.EditorTools;
 using UnityEditor.Experimental.GraphView;
@@ -56,8 +57,8 @@ public class AttackBehaviour : MonoBehaviour
         _rB = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void FixedUpdate() { }
+
+    private bool shouldCast = false;
 
     void Update()
     {
@@ -66,6 +67,20 @@ public class AttackBehaviour : MonoBehaviour
         {
             _chargeTimer += Time.deltaTime;
         }
+
+        if (shouldCast)
+        {
+            MakeCircleCast();
+        }
+    }
+
+    public void castShit(int i)
+    {
+        if (i == 1)
+            shouldCast = true;
+        else
+            shouldCast = false;
+        //shouldCast = castState;
     }
 
     public void Attack(InputAction.CallbackContext context)
@@ -82,48 +97,95 @@ public class AttackBehaviour : MonoBehaviour
         {
             _attackTimer = _attackCooldown;
 
-            float _tempForce = _hitForce;
-            if (_chargeTimer >= _timeUntillCharged)
-            {
-                _attackTimer = _heavyAttackCooldown;
-                _tempForce = _forceByTime * _tempForce * _chargeTimer;
-                if (_tempForce > _maxForceMultiplyer * _hitForce)
-                {
-                    _tempForce = _maxForceMultiplyer * _hitForce;
-                }
-            }
+            /*  float _tempForce = _hitForce;
+              if (_chargeTimer >= _timeUntillCharged)
+              {
+                  _attackTimer = _heavyAttackCooldown;
+                  _tempForce = _forceByTime * _tempForce * _chargeTimer;
+                  if (_tempForce > _maxForceMultiplyer * _hitForce)
+                  {
+                      _tempForce = _maxForceMultiplyer * _hitForce;
+                  }
+              }*/
             _isCharging = false;
             GetComponent<PlayerMovement>().anim.SetTrigger("AttackRelease");
 
             dir = GetComponent<PlayerMovement>().facingDir;
-            RaycastHit2D[] hits = Physics2D.CircleCastAll(
-                transform.position,
-                _attackRadius,
-                dir,
-                _distance
-            );
-            for (int i = 0; i < hits.Length; i++)
+
+            /*  RaycastHit2D[] hits = Physics2D.CircleCastAll(
+                  transform.position,
+                  _attackRadius,
+                  dir,
+                  _distance
+              );
+              for (int i = 0; i < hits.Length; i++)
+              {
+                  if (hits[i].transform.gameObject != gameObject)
+                  {
+                      if (hits[i].transform.CompareTag("Player"))
+                      {
+                          //Find the direction vector from player A to B
+                          Vector2 dir = hits[i].transform.position - transform.position;
+  
+                          //Get opponent Rigidbody
+                          Rigidbody2D oppRB = hits[i]
+                              .transform.gameObject.GetComponent<Rigidbody2D>();
+  
+                          PlayerMovement pM = hits[i]
+                              .transform.gameObject.GetComponent<PlayerMovement>();
+                          pM.DisableMovment();
+                          //Add hitting Force
+                          Debug.Log(_tempForce + " force we are using");
+                          oppRB.AddForce(dir.normalized * _tempForce, ForceMode2D.Impulse);
+                          GameEventsManager.instance.PlayerHit(hits[i].transform);
+                          GameEventsManager.instance.CameraShake();
+                      }
+                  }
+              }*/
+        }
+    }
+
+    [SerializeField]
+    private Transform _swordReferencePoint;
+
+    private void MakeCircleCast()
+    {
+        float _tempForce = _hitForce;
+        if (_chargeTimer >= _timeUntillCharged)
+        {
+            _attackTimer = _heavyAttackCooldown;
+            _tempForce = _forceByTime * _tempForce * _chargeTimer;
+            if (_tempForce > _maxForceMultiplyer * _hitForce)
             {
-                if (hits[i].transform.gameObject != gameObject)
+                _tempForce = _maxForceMultiplyer * _hitForce;
+            }
+        }
+
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(
+            _swordReferencePoint.position,
+            _attackRadius,
+            dir,
+            _distance
+        );
+        for (int i = 0; i < hits.Length; i++)
+        {
+            if (hits[i].transform.gameObject != gameObject)
+            {
+                if (hits[i].transform.CompareTag("Player"))
                 {
-                    if (hits[i].transform.CompareTag("Player"))
-                    {
-                        //Find the direction vector from player A to B
-                        Vector2 dir = hits[i].transform.position - transform.position;
+                    //Find the direction vector from player A to B
+                    Vector2 dir = hits[i].transform.position - transform.position;
 
-                        //Get opponent Rigidbody
-                        Rigidbody2D oppRB = hits[i]
-                            .transform.gameObject.GetComponent<Rigidbody2D>();
+                    //Get opponent Rigidbody
+                    Rigidbody2D oppRB = hits[i].transform.gameObject.GetComponent<Rigidbody2D>();
 
-                        PlayerMovement pM = hits[i]
-                            .transform.gameObject.GetComponent<PlayerMovement>();
-                        pM.DisableMovment();
-                        //Add hitting Force
-                        Debug.Log(_tempForce + " force we are using");
-                        oppRB.AddForce(dir.normalized * _tempForce, ForceMode2D.Impulse);
-                        GameEventsManager.instance.PlayerHit(hits[i].transform);
-                        GameEventsManager.instance.CameraShake();
-                    }
+                    PlayerMovement pM = hits[i].transform.gameObject.GetComponent<PlayerMovement>();
+                    pM.DisableMovment();
+                    //Add hitting Force
+                    Debug.Log(_tempForce + " force we are using");
+                    oppRB.AddForce(dir.normalized * _tempForce, ForceMode2D.Impulse);
+                    GameEventsManager.instance.PlayerHit(hits[i].transform);
+                    GameEventsManager.instance.CameraShake();
                 }
             }
         }
@@ -133,6 +195,6 @@ public class AttackBehaviour : MonoBehaviour
     {
         Gizmos.color = Color.red;
 
-        Gizmos.DrawSphere(transform.position + (Vector3)dir * _distance, _attackRadius);
+        Gizmos.DrawSphere(_swordReferencePoint.position, _attackRadius);
     }
 }
