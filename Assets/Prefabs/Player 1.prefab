@@ -238,7 +238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70cbcc0b2a5158144a78b02d4d9a1048, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Speed: 5
+  _Speed: 7
   _minVelocityReset: 2
   facingDir: {x: 0, y: 0}
   anim: {fileID: 0}
@@ -260,7 +260,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
+  m_LinearDrag: 3
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -286,12 +286,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07d2b5932d44ac34d8bbda0cb93ef822, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hitForce: 10
+  _hitForce: 50
   _maxSpeed: 100
   _attackRadius: 0.7
-  _distance: 1.5
-  _attackCooldown: 2
-  _heavyAttackCooldown: 3
+  _distance: 0
+  _attackCooldown: 0.5
+  _heavyAttackCooldown: 1
   _maxForceMultiplyer: 2
   _forceByTime: 2
   _timeUntillCharged: 1

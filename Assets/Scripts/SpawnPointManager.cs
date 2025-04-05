@@ -19,6 +19,8 @@ public class SpawnPointManager : MonoBehaviour
     [Header("Win Game")]
     [SerializeField] private GameObject _winMenu;
     [SerializeField] private TextMeshProUGUI _winGameText;
+    [SerializeField] private float _respawnDelayedMovement = 1f;
+
 
     [Header("Points Gui")]
     public TextMeshProUGUI player1PointsText;
@@ -61,7 +63,10 @@ public class SpawnPointManager : MonoBehaviour
     {
         winText.text = "";
         player1.gameObject.SetActive(true);
+        player1.GetComponent<PlayerMovement>().DisableMovment(_respawnDelayedMovement);
         player2.gameObject.SetActive(true);
+        player2.GetComponent<PlayerMovement>().DisableMovment(_respawnDelayedMovement);
+
 
         SetPosition();
     }
